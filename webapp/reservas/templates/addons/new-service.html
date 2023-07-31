@@ -1,0 +1,41 @@
+<!-- Modal Create -->
+<div class="modal fade" id="newServiceModal" tabindex="-1" role="dialog" aria-labelledby="newEmployeeModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="max-width:420px;">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-5" id="ModalLabel">Nuevo Servicio</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" action="{% url 'new-service' %}" method="POST" id="form_modificar" autocomplete="off" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body" style="max-width:420px;">
+                    <!-- Name input -->
+                    <div class="form-outline mb-2">
+                        {{ form.nombre }}
+                    </div>
+                    <!-- Descript input -->
+                    <div class="form-outline mb-2">
+                        {{ form.descripcion }}
+                    </div>
+                    <!-- File number input -->
+                    <div class="form-outline mb-2 input-group">
+                        <span class="input-group-text">$</span>
+                        {{ form.precio }}
+                    </div>
+                    <div class="form-outline mb-2 input-group">
+                        <span class="input-group-text">$</span>
+                        {{ form.imagen }}
+                    </div>
+                    <!--   Submit button    -->
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-secondary btn-block flex-fill me-2 mb-4"
+                                data-bs-dismiss="modal">Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-block flex-fill mb-4">Aceptar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->

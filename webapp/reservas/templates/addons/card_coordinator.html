@@ -1,0 +1,77 @@
+<!-- Card Employee -->
+<div class="card flex-fill px-0 border-0">
+    <!-- Card header -->
+    <div class="rounded-top" style="background: rgb(120,217,197);
+         background: linear-gradient(30deg, rgba(120,217,197,1) 0%, rgba(70,171,243,1) 45%, rgba(169,81,255,1) 100%);
+         height: 7em;">
+        <div class="dropdown d-flex justify-content-end m-3">
+            <button class="btn btn-light dropdown-toggle rounded-circle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false" style="width: 40px; height: 40px;">
+                <i class="fa-solid fa-ellipsis-vertical" style="color: #A5A8B3;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end mt-1">
+                {% if coordinador.activo %}
+                <li><a class="dropdown-item" href="/coordinadores/desactivar/{{ coordinador.id }}">Desactivar</a></li>
+                {% else %}
+                <li><a class="dropdown-item" href="/coordinadores/activar/{{ coordinador.id }}">Activar</a></li>
+                {% endif %}
+                <li>
+                    <a class="dropdown-item" href="#" onclick="edit_coordinador(this)" data-id="{{ coordinador.id }}"
+                        data-bs-toggle="modal" data-bs-target="#newEmployeeModal">
+                        Modificar
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Float -->
+    <div class="position-relative px-2">
+        <div class="top-0 start-50 translate-middle badge position-absolute">
+            <img class="img-sm rounded-circle border border-5 border-custom"
+                src="{% if coordinador.imagen %}/{{ coordinador.imagen }}{% else%}/upload/img/empleados/blank-profile-picture.jpg{% endif%}" width="75%" height="75%">
+        </div>
+        <h2 class="d-flex justify-content-end text-secondary fs-5 pt-2">#{{ coordinador.id }}</h2>
+    </div>
+    <!-- Card body -->
+    <div class="card-body mx-3 mt-2">
+        <!-- Card title -->
+        <div class="mb-5">
+            <h4 class="card-title d-flex justify-content-center">
+                <a href="#" class="text-inherit text-center text-decoration-none">
+                    <span>{{ coordinador.nombre }}</span>
+                    <span> {{ coordinador.apellido }}</span>
+                </a>
+            </h4>
+            <h5 class="d-flex justify-content-center" style="color: #A5A8B3;">
+                Coordinador
+            </h5>
+        </div>
+        <!-- Card content -->
+        <div class="mt-auto">
+            <div class="d-flex justify-content-between border-bottom py-2 mt-6">
+                <span>DNI</span>
+                <span>{{ coordinador.dni }}</span>
+            </div>
+            <div class="d-flex justify-content-between border-bottom py-2">
+                <span>calificaciones</span>
+                <span class="text-warning">
+                    4.5 <i class="fa-solid fa-star"></i>
+                </span>
+            </div>
+            <div class="d-flex justify-content-between pt-2">
+                <span>Estado</span>
+                <span>
+                    {% if coordinador.activo %}
+                    <i class="fs-6 fa-solid fa-circle" style="color: #76D5C1;"></i>
+                    Activo 
+                    {% else %}
+                    <i class="fs-6 fa-solid fa-circle text-danger"></i>
+                    Inactivo
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- Card footer -->
+    <div class="mb-2"></div>
+</div>

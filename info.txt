@@ -1,0 +1,49 @@
+python -m pip freeze > requirements.txt
+
+-----------------------------------------
+python.exe -m pip install --upgrade pip
+pip install django
+pip install jinja2
+-----------------------------------------
+django-admin startproject project
+cd webapp
+python manage.py startapp eventos
+
+python manage.py createsuperuser
+datos cuenta super usuario del aministrador: admin / 132456
+-----------------------------------------
+python manage.py makemigrations
+python manage.py migrate
+-----------------------------------------
+python manage.py runserver
+pip install jinja2
+
+webapp/jinja2.py:
+def ini_jinja2(**options):
+    env = Environment(**options)
+    env.globals.update({
+        'static': staticfiles_storage.url,
+        'url': reverse,
+    })
+
+    return env
+
+en settings.py:
+ {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': ["templates"],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'StockControl.jinja2.ini_jinja2',
+            'auto_reload': DEBUG,
+            'autoescape': True
+        },
+    },
+    abajo de static_URL
+    STATICFILES_DIRS =(
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR , 'staticfiles')
+
+python manage.py runserver

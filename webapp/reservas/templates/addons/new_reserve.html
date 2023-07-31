@@ -1,0 +1,91 @@
+<!-- Modal Signup-->
+<div class="modal fade" id="newReserveModal" tabindex="-1" role="dialog" aria-labelledby="newReserveModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="max-width:420px;">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-5" id="ModalLabel">Nueva Reserva</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" action="{% url 'new-reservation' %}" method="POST" id="form_modificar">
+                {% csrf_token %}
+                <div class="modal-body" style="max-width:420px;">
+                    <!-- Combo cliente -->
+                    <div class="form-outline mb-4">
+                        <label for="id_clientes">Cliente</label>
+                        <select id="id_clientes" name="cliente" class="form-select form-select-sm form-control tt">
+                            {% for item in clientes %}
+                            {% if forloop.first %}
+                            <option value="{{ item.id }}" selected>{{ item.nombre }} {{ item.apellido }}</option>
+                            {% else %}
+                            <option value="{{ item.id }}">{{ item.nombre }} {{ item.apellido }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Combo servicio -->
+                    <div class="form-outline mb-4">
+                        <label for="id_servicios">Servicio</label>
+                        <select id="id_servicios" name="servicio" class="d-inline-block form-select form-select-sm form-control tt">
+                            {% for item in servicios %}
+                            {% if forloop.first %}
+                            <option value="{{ item.id }}" data-precio="{{ item.precio }}" selected>{{ item.nombre }}</option>
+                            {% else %}
+                            <option value="{{ item.id }}" data-precio="{{ item.precio }}">{{ item.nombre }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Combo empleado -->
+                    <div class="form-outline mb-4">
+                        <label for="id_empelados">Empleado</label>
+                        <select id="id_empelados" name="empleado"
+                                class="d-inline-block form-select form-select-sm form-control tt">
+                            {% for item in empleados %}
+                            {% if forloop.first %}
+                            <option value="{{ item.id }}" selected>{{ item.nombre }} {{ item.apellido }}</option>
+                            {% else %}
+                            <option value="{{ item.id }}">{{ item.nombre }} {{ item.apellido }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Combo coordinador -->
+                    <div class="form-outline mb-4">
+                        <label for="id_responsable">Coordinador</label>
+                        <select id="id_responsable" name="responsable"
+                                class="d-inline-block form-select form-select-sm form-control tt">
+                            {% for item in coordinadores %}
+                            {% if forloop.first %}
+                            <option value="{{ item.id }}" selected>{{ item.nombre }} {{ item.apellido }}</option>
+                            {% else %}
+                            <option value="{{ item.id }}">{{ item.nombre }} {{ item.apellido }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Input Precio -->
+                    <div class="form-outline mb-2">
+                        {{ form.precio.label }}
+                    </div>
+                    <div class="form-outline mb-2 input-group">
+                        <span class="input-group-text">$</span>
+                        {{ form.precio }}
+                    </div>
+                    <!-- Input date -->
+                    <div class="form-outline mb-4">
+                        <label for="id_fecha_reserva">Fecha de reserva</label>
+                        {{ form.fecha_reserva }}
+                    </div>
+                    <!-- Submit button -->
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-secondary btn-block flex-fill me-2 mb-4"
+                                data-bs-dismiss="modal">Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-block flex-fill mb-4">Aceptar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->

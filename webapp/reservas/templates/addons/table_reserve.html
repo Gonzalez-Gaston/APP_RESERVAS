@@ -1,0 +1,44 @@
+<!-- Card Reserve-->
+<div class="col px-0">
+    <div class="table-responsive table mt-2" id="dataTable" role="grid"
+         aria-describedby="dataTable_info">
+        <table class="table my-0">
+            <thead>
+            <tr>
+                {% for titulo in headers %}
+                <th>{{ titulo }}</th>
+                {%endfor%}
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Inicio de TD -->
+            {% for reserva in reservas %}
+            <tr class="align-middle">
+                <td>{{ reserva.fecha_reserva }}</td>
+                <td>{{ reserva.cliente.nombre }} {{ reserva.cliente.apellido }}</td>
+                <td>{{ reserva.responsable.nombre }} {{ reserva.responsable.apellido }}</td>
+                <td>{{ reserva.empleado.nombre }} {{ reserva.empleado.nombre }}</td>
+                <td>{{ reserva.servicio }}</td>
+                <td>$ {{ reserva.precio }}</td>
+                <td style="width: 100px;">
+                    <a class="btn btn-danger" href="{% url 'eliminar_reserva' reserva.id %}">
+                        Eliminar
+                    </a>
+                </td>
+                <td style="width: 100px;">
+                    <a class="btn btn-warning"
+                       href="#"
+                       onclick="edit_reserva(this)"
+                       data-id="{{ reserva.id }}"
+                       data-bs-toggle="modal"
+                       data-bs-target="#newReserveModal">
+                        Modificar
+                    </a>
+                </td>
+            </tr>
+            {%endfor%}
+            <!-- Fin de TD -->
+            </tbody>
+        </table>
+    </div>
+</div>

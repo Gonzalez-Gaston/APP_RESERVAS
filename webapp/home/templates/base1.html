@@ -1,0 +1,117 @@
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+          integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous"/>
+    <title>Title</title>
+    <style>
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    </style>
+</head>
+
+<body>
+<!-- COMENZAR -->
+<header>
+    <div class="containter-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary px-2" style="background: rgb(120,217,197);
+         background: linear-gradient(30deg, rgba(120,217,197,1) 0%, rgba(70,171,243,1) 45%, rgba(169,81,255,1) 100%);">
+                    <div class="container-fluid">
+                        <a class="navbar-brand text-light " href="{% url 'home' %}">Reserv.AR</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse px-5" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" aria-current="page" href="{% url 'home' %}">Inicio</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" href="{% url 'nosotros' %}">Nosotros</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" href="{% url 'home' %}">Servicios</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" href="{% url 'fotos' %}">Fotos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" href="{% url 'contacto' %}">Contacto</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    {% block header %}
+    {% endblock %}
+
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<footer class="text-center text-white" style="background: rgb(120,217,197);
+         background: linear-gradient(30deg, rgba(120,217,197,1) 0%, rgba(70,171,243,1) 45%, rgba(169,81,255,1) 100%);">
+    <!-- Grid container -->
+    <div class="container pt-4">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+            <!-- Facebook -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#" role="button"
+               data-mdb-ripple-color="light"><i class="bi bi-facebook"></i></a>
+
+            <!-- Twitter -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#" role="button"
+               data-mdb-ripple-color="light"><i class="bi bi-twitter"></i></a>
+
+            <!-- Google -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#" role="button"
+               data-mdb-ripple-color="dark"><i class="bi bi-google"></i></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#" role="button"
+               data-mdb-ripple-color="light"><i class="bi bi-instagram"></i></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#" role="button"
+               data-mdb-ripple-color="light"><i class="bi bi-linkedin"></i></a>
+            <!-- Github -->
+            <a class="btn btn-link btn-floating btn-lg text-light m-1" href="#" role="button"
+               data-mdb-ripple-color="light"><i class="bi bi-github"></i></a>
+        </section>
+        <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center text-light p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023 Copyright:
+        <a class="text-light" href="https://mdbootstrap.com/">SQuad-3 Salta Argentina</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+
+<!-- TERMINAR -->
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous">
+</script>
+</body>
+
+</html>

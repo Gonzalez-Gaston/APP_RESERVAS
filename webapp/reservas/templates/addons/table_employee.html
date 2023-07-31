@@ -1,0 +1,48 @@
+<!-- Card Employee-->
+<div class="col px-0">
+    <div class="table-responsive table"
+         id="dataTable"
+         role="grid"
+         aria-describedby="dataTable_info">
+        <table class="table my-0">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Numero de legajo</th>
+                <th>Activo</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Inicio de TD -->
+            {% for empleado in empleados %}
+            <tr class="align-middle">
+                <td>{{ empleado.nombre }}</td>
+                <td>{{ empleado.apellido }}</td>
+                <td>{{ empleado.numero_legajo }}</td>
+                <td style="width: 116px;">
+                    {% if empleado.activo %}
+                    <a class="btn btn-primary" href="/empleados/desactivar/{{ empleado.id }}">Activo</a>
+                    {% else %}
+                    <a class="btn btn-secondary"
+                       href="/empleados/activar/{{ empleado.id }}">Desactivado</a>
+                    {% endif %}
+                </td>
+                <td style="width: 100px;">
+                    <a class="btn btn-warning"
+                       href="#"
+                       onclick="edit_empleado(this)"
+                       data-id="{{ empleado.id }}"
+                       data-bs-toggle="modal"
+                       data-bs-target="#newEmployeeModal">
+                        Modificar
+                    </a>
+                </td>
+            </tr>
+            {%endfor%}
+            <!-- Fin de TD -->
+            </tbody>
+        </table>
+    </div>
+</div>

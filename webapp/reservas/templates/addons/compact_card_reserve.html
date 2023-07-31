@@ -1,0 +1,67 @@
+<!-- Compact Card Employee -->
+<div class="card flex-fill border-0 px-0 mx-3 mb-3">
+    <div class="d-flex m-2">
+        <!-- img -->
+        <img class="rounded img-fluid" src="{% if empleado.imagen %}/{{ empleado.imagen }}{% else%}/upload/img/empleados/blank-profile-picture.jpg{% endif%}"
+             {% if producto.new == True %}Nuevo{% else %}Usado{% endif %}
+            style="width: 72px; height: 72px;">
+        <!-- content -->
+        <div class="d-flex align-items-center ms-3">
+            <div class="">
+                <h4 class="card-title d-flex justify-content-start">
+                    <a href="#" class="text-inherit text-decoration-none">
+                        {{ empleado.nombre }} {{ empleado.apellido }}
+                    </a>
+                    <span class="ms-2 text-inherit">#{{ empleado.id }}</span>
+                </h4>
+                <div class="">
+                    <a href="#" class="text-inherit text-decoration-none ms-2 text-warning">
+                        4.5
+                        <i class="fa-solid fa-star"></i>
+                    </a>
+                    <span>Número de legajo: {{ empleado.numero_legajo }}</span>
+                </div>
+            </div>
+        </div>
+        <!-- extra -->
+        <div class="d-flex align-items-center ms-auto">
+            {% if empleado.activo %}
+            <div><i class="fa-solid fa-circle fs-6" style="color:#76D5C1;"></i></div>
+            <div class="ms-2 fs-5">Activo</div>
+            <div class="dropdown d-flex justify-content-end m-3">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    style="width: 40px; height: 40px;">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end mt-1">
+                    <li><a class="dropdown-item" href="/empleados/desactivar/{{ empleado.id }}">Desactivar</a></li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="edit_empleado(this)" data-id="{{ empleado.id }}"
+                            data-bs-toggle="modal" data-bs-target="#newEmployeeModal">
+                            Modificar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {% else %}
+            <div><i class="fa-solid fa-circle fs-6 text-danger"></i></div>
+            <div class="ms-2 fs-5">Inactivo</div>
+            <div class="dropdown d-flex justify-content-end m-3">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    style="width: 40px; height: 40px;">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end mt-1">
+                    <li><a class="dropdown-item" href="/empleados/activar/{{ empleado.id }}">Activar</a></li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="edit_empleado(this)" data-id="{{ empleado.id }}"
+                            data-bs-toggle="modal" data-bs-target="#newEmployeeModal">
+                            Modificar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

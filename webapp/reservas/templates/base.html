@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/assets/img/favicon.ico' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+          integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{% static '/assets/css/custom.css' %}">
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Load sweet alert js -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Dashboard</title>
+</head>
+<body class="grid-container" data-bs-theme="light">
+<script src="{% static 'assets/js/custom-script.js' %}"></script>
+<!-- Start messages from backend -->
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == "info" %}
+<script>
+        swal({
+            title: "¡UPS!",
+            text: "{{ message }}",
+            icon: "info",
+            button: "Aceptar",
+        });
+
+
+
+
+</script>
+{% elif message.tags == "error" %}
+<script>
+        swal({
+            title: "¡Error!",
+            text: "{{ message }}",
+            icon: "error",
+            button: "Aceptar",
+        });
+
+
+
+
+</script>
+{% elif message.tags == "success" %}
+<script>
+        swal({
+            title: "¡Perfecto!",
+            text: "{{ message }}",
+            icon: "success",
+            button: "Aceptar",
+        });
+
+
+
+
+</script>
+{% elif message.tags == "warning" %}
+<script>
+        swal({
+            title: "¡Advertencia!",
+            text: "{{ message }}",
+            icon: "warning",
+            button: "Aceptar",
+        });
+
+
+
+
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+<!-- End messages from backend -->
+<nav class="navbar bg-primary px-3 mb-4 py-2" style="background: rgb(120,217,197);
+         background: linear-gradient(30deg, rgba(120,217,197,1) 0%, rgba(70,171,243,1) 45%, rgba(169,81,255,1) 100%);">
+    <a id="aside-toggle" class="d-none d-lg-flex" onclick="toggleAside()" href="#">
+        <i class="fa-solid fa-bars text-light"></i>
+    </a>
+    <a id="nav-toggle" class="d-flex d-lg-none"
+       data-bs-toggle="collapse"
+       href="#collapseMenu"
+       role="button"
+       aria-expanded="false"
+       aria-controls="collapseMenu">
+        <i class="fa-solid fa-bars text-light"></i>
+    </a>
+    <div class="ms-lg-3 d-none d-md-none d-lg-block">
+        <!-- Form -->
+        <form class="d-flex align-items-center" action="#">
+            <button class="btn position-absolute ps-3" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+            <input type="search" class="form-control ps-6 search"
+                   placeholder="Buscar en todo el panel">
+        </form>
+    </div>
+    <!--Navbar nav -->
+    <div class="d-flex ms-auto">
+        <div class="d-flex align-items-center">
+            <button class="btn btn-light rounded-circle p-0"
+                    onclick="themeSwapper()"
+                    style="width: 36px; height: 36px;">
+                <i id="theme-swapper-icon" class="text-primary fa-solid fa-sun"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+<aside id="aside" class="navbar sidebar aside align-items-start d-none d-lg-flex">
+    <div class="container">
+        <div class="my-5 mx-4">
+            <img class="img-fluid" src="{% static '/assets/img/logo.png' %}">
+        </div>
+        <div class="row">
+            <ul class="navbar nav nav-underline px-4 row">
+                <li class="nav-item">
+                    <a class="nav-link active border-bottom-0" href="{% url 'dashboard' %}" aria-current="page">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M2.75 12C2.75 18.937 5.063 21.25 12 21.25C18.937 21.25 21.25 18.937 21.25 12C21.25 5.063 18.937 2.75 12 2.75C5.063 2.75 2.75 5.063 2.75 12Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path d="M9.07861 16.1355H14.8936" stroke="#FFFFFF" stroke-width="1.5"
+                                          stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-bottom-0"
+                       data-bs-toggle="collapse"
+                       href="#manage_product"
+                       role="button"
+                       aria-controls="manage_product"
+                       aria-expanded="false">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g>
+                                    <path d="M12.0002 2.75C5.06324 2.75 2.75024 5.063 2.75024 12C2.75024 18.937 5.06324 21.25 12.0002 21.25C18.9372 21.25 21.2502 18.937 21.2502 12"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M19.5285 4.30364V4.30364C18.5355 3.42464 17.0185 3.51664 16.1395 4.50964C16.1395 4.50964 11.7705 9.44464 10.2555 11.1576C8.73853 12.8696 9.85053 15.2346 9.85053 15.2346C9.85053 15.2346 12.3545 16.0276 13.8485 14.3396C15.3435 12.6516 19.7345 7.69264 19.7345 7.69264C20.6135 6.69964 20.5205 5.18264 19.5285 4.30364Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path d="M15.009 5.80078L18.604 8.98378" stroke="#FFFFFF" stroke-width="1.5"
+                                          stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        Administrar servicios
+                    </a>
+                    <ul id="manage_product" class="navbar-nav collapse" aria-expanded="false">
+                        <li class="nav-item">
+                            <a class="nav-link border-bottom-0 ps-4" href="{% url 'services_list' %}"
+                               aria-expanded="false">
+                                <i class="far fa-arrow-alt-circle-right"></i>
+                                Servicios
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link border-bottom-0 ps-4" href="{% url 'reservations-list' %}"
+                               aria-expanded="false">
+                                <i class="far fa-arrow-alt-circle-right"></i>
+                                Reservas
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-bottom-0" href="{% url 'list_employee' %}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.92234 21.8083C6.10834 21.8083 2.85034 21.2313 2.85034 18.9213C2.85034 16.6113 6.08734 14.5103 9.92234 14.5103C13.7363 14.5103 16.9943 16.5913 16.9943 18.9003C16.9943 21.2093 13.7573 21.8083 9.92234 21.8083Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.92231 11.2159C12.4253 11.2159 14.4553 9.1859 14.4553 6.6829C14.4553 4.1789 12.4253 2.1499 9.92231 2.1499C7.41931 2.1499 5.38931 4.1789 5.38931 6.6829C5.38031 9.1769 7.39631 11.2069 9.89031 11.2159H9.92231Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        Empleados
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-bottom-0" href="{% url 'lista_cliente' %}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M11.9724 20.3683C8.73343 20.3683 5.96643 19.8783 5.96643 17.9163C5.96643 15.9543 8.71543 14.2463 11.9724 14.2463C15.2114 14.2463 17.9784 15.9383 17.9784 17.8993C17.9784 19.8603 15.2294 20.3683 11.9724 20.3683Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M11.9725 11.4488C14.0985 11.4488 15.8225 9.72576 15.8225 7.59976C15.8225 5.47376 14.0985 3.74976 11.9725 3.74976C9.84645 3.74976 8.12245 5.47376 8.12245 7.59976C8.11645 9.71776 9.82645 11.4418 11.9455 11.4488H11.9725Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path
+                                            d="M18.3622 10.3915C19.5992 10.0605 20.5112 8.93254 20.5112 7.58954C20.5112 6.18854 19.5182 5.01854 18.1962 4.74854"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    <path
+                                            d="M18.9431 13.5444C20.6971 13.5444 22.1951 14.7334 22.1951 15.7954C22.1951 16.4204 21.6781 17.1014 20.8941 17.2854"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    <path
+                                            d="M5.58372 10.3915C4.34572 10.0605 3.43372 8.93254 3.43372 7.58954C3.43372 6.18854 4.42772 5.01854 5.74872 4.74854"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    <path
+                                            d="M5.00176 13.5444C3.24776 13.5444 1.74976 14.7334 1.74976 15.7954C1.74976 16.4204 2.26676 17.1014 3.05176 17.2854"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        Clientes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-bottom-0" href="{% url 'list_coordinator' %}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.55851 21.4562C5.88651 21.4562 2.74951 20.9012 2.74951 18.6772C2.74951 16.4532 5.86651 14.4492 9.55851 14.4492C13.2305 14.4492 16.3665 16.4342 16.3665 18.6572C16.3665 20.8802 13.2505 21.4562 9.55851 21.4562Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.55849 11.2776C11.9685 11.2776 13.9225 9.32356 13.9225 6.91356C13.9225 4.50356 11.9685 2.54956 9.55849 2.54956C7.14849 2.54956 5.19449 4.50356 5.19449 6.91356C5.18549 9.31556 7.12649 11.2696 9.52749 11.2776H9.55849Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path
+                                            d="M16.8013 10.0789C18.2043 9.70388 19.2383 8.42488 19.2383 6.90288C19.2393 5.31488 18.1123 3.98888 16.6143 3.68188"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    <path
+                                            d="M17.4608 13.6536C19.4488 13.6536 21.1468 15.0016 21.1468 16.2046C21.1468 16.9136 20.5618 17.6416 19.6718 17.8506"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        Coordinadores
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-bottom-0" href="/admin/">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.55851 21.4562C5.88651 21.4562 2.74951 20.9012 2.74951 18.6772C2.74951 16.4532 5.86651 14.4492 9.55851 14.4492C13.2305 14.4492 16.3665 16.4342 16.3665 18.6572C16.3665 20.8802 13.2505 21.4562 9.55851 21.4562Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.55849 11.2776C11.9685 11.2776 13.9225 9.32356 13.9225 6.91356C13.9225 4.50356 11.9685 2.54956 9.55849 2.54956C7.14849 2.54956 5.19449 4.50356 5.19449 6.91356C5.18549 9.31556 7.12649 11.2696 9.52749 11.2776H9.55849Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path
+                                            d="M16.8013 10.0789C18.2043 9.70388 19.2383 8.42488 19.2383 6.90288C19.2393 5.31488 18.1123 3.98888 16.6143 3.68188"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    <path
+                                            d="M17.4608 13.6536C19.4488 13.6536 21.1468 15.0016 21.1468 16.2046C21.1468 16.9136 20.5618 17.6416 19.6718 17.8506"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        Administración
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-bottom-0" href="/api/v2/">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <g>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.55851 21.4562C5.88651 21.4562 2.74951 20.9012 2.74951 18.6772C2.74951 16.4532 5.86651 14.4492 9.55851 14.4492C13.2305 14.4492 16.3665 16.4342 16.3665 18.6572C16.3665 20.8802 13.2505 21.4562 9.55851 21.4562Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M9.55849 11.2776C11.9685 11.2776 13.9225 9.32356 13.9225 6.91356C13.9225 4.50356 11.9685 2.54956 9.55849 2.54956C7.14849 2.54956 5.19449 4.50356 5.19449 6.91356C5.18549 9.31556 7.12649 11.2696 9.52749 11.2776H9.55849Z"
+                                          stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                          stroke-linejoin="round"></path>
+                                    <path
+                                            d="M16.8013 10.0789C18.2043 9.70388 19.2383 8.42488 19.2383 6.90288C19.2393 5.31488 18.1123 3.98888 16.6143 3.68188"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    <path
+                                            d="M17.4608 13.6536C19.4488 13.6536 21.1468 15.0016 21.1468 16.2046C21.1468 16.9136 20.5618 17.6416 19.6718 17.8506"
+                                            stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                        API
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
+<main class="main d-sm-flex justify-content-between mb-4">
+    {% block content %}
+    {% endblock %}
+</main>
+<footer class="footer"></footer>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous">
+</script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+<script>
+function toggleAside() {
+  const body = document.body;
+  const aside = document.querySelector('.aside');
+
+  // Verificar si el body tiene la clase "grid-container-hide-aside"
+  const isAsideHidden = body.classList.contains('grid-container-hide-aside');
+
+  if (isAsideHidden) {
+    // Restaurar los valores iniciales
+    body.classList.remove('grid-container-hide-aside');
+    body.classList.add('grid-container');
+    aside.classList.add('d-lg-flex');
+  } else {
+    // Cambiar la clase del body y eliminar la clase "d-lg-flex" del aside
+    body.classList.remove('grid-container');
+    body.classList.add('grid-container-hide-aside');
+    aside.classList.remove('d-lg-flex');
+  }
+}
+
+
+</script>
+
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content%}
+{% include 'addons/new_reserve.html' %}
+{% include 'addons/import.html' %}
+<div class="container-fluid">
+    <div class="row mx-3 mb-3 d-lg-none">
+        <div class="col collapse" id="collapseMenu" style="">
+            <div class="card card-body row">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'home' %}" aria-current="page">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link border-bottom-0"
+                           data-bs-toggle="collapse"
+                           href="#manage_product2"
+                           role="button"
+                           aria-controls="manage_product"
+                           aria-expanded="false">
+                            Administrar servicios
+                        </a>
+                        <ul id="manage_product2" class="navbar-nav collapse" aria-expanded="false">
+                            <li class="nav-item">
+                                <a class="nav-link border-bottom-0 ps-4" href="{% url 'services_list' %}"
+                                   aria-expanded="false">
+                                    Servicios
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link border-bottom-0 ps-4" href="{% url 'reservations-list' %}"
+                                   aria-expanded="false">
+                                    Reservas
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list_employee' %}">Empleados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'lista_cliente' %}">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list_coordinator' %}">Coordinadores</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="d-sm-flex justify-content-between align-items-center mb-4 mx-3">
+                <div>
+                    <h3 class="mb-1">Reservas</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'reservations-list' %}">Reservas</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Listado</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-primary btn-sm d-none d-sm-inline-block ms-2 px-3"
+                       onclick="cleanData('Reserva')"
+                       data-bs-toggle="modal"
+                       data-bs-target="#newReserveModal"
+                       href="#">
+                        &nbsp;Nuevo Reserva
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card border-0 shadow-sm mx-3">
+                <div class="card-header d-flex border-0 pb-0">
+                    <div class="col">
+                        {% load custom_filters %}
+                        <ul class="nav nav-underline ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link {% if filter == 'all' %}active{% endif %}"
+                                   id="all-filter"
+                                   href="?filter=all">
+                                    Todos
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <!-- nav options -->
+                        <ul class="nav nav-underline justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link px-0 active border-bottom-0"
+                                   id="a_table_id"
+                                   data-bs-toggle="tab"
+                                   data-bs-target="#table_id"
+                                   role="tab"
+                                   aria-controls="table_id"
+                                   aria-selected="false"
+                                   onclick="setViewMode('view-mode', 'table')"
+                                   href="#">
+                                    <i class="fs-4 fa-solid fa-table-list"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="d-flex justify-content-end align-items-center pt-1">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-1 pb-0">
+                    <div class="row mb-2">
+                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-xxl-3 text-nowrap">
+                            <label class="form-label d-flex align-items-center">Mostrar &nbsp;
+                                <select class="d-flex form-select form-select-sm"
+                                        id="cantidad-select" name="cantidad">
+                                    <option value="5" {% if cnt == 5 %}selected{% endif %}>5</option>
+                                    <option value="10" {% if cnt == 10 %}selected{% endif %}>10</option>
+                                    <option value="20" {% if cnt == 20 %}selected{% endif %}>20</option>
+                                    <option value="50" {% if cnt == 50 %}selected{% endif %}>50</option>
+                                </select>&nbsp;
+                            </label>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-9 col-xxl-9">
+                            <div class="text-end d-flex align-items-center justify-content-end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- content -->
+    <div class="tab-content" id="tab-content">
+        <div class="tab-pane active show" id="table_id" role="tabpanel" aria-labelledby="table_id">
+            <div class="row mt-4 mx-3">
+                {% include 'addons/table_reserve.html' %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="compact_cards_id" role="tabpanel" aria-labelledby="compact_cards_id">
+            <div class="row mt-4 mx-1">
+                {% for reserva in reservas %}
+                {% include 'addons/compact_card_reserve.html' %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="cards_id" role="tabpanel" aria-labelledby="cards_id">
+            <div class="row mt-4 mx-1">
+                {% for reserva in reservas %}
+                <div class="col col-sm-6 col-md-4 col-lg-4 col-xxl-3 d-flex flex-grow mb-3" id="card_{{ emplead.id }}">
+                    {% include 'addons/card_reserve.html' %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card border-0 shadow-sm mx-3">
+                <div class="card-footer rounded-top border-0 d-flex pt-3 pb-1">
+                    <div class="col">
+                        <nav class="d-flex justify-content-center">
+                            <ul class="pagination">
+                                {% if reservas.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?{% if request.GET %}{{ request.GET.urlencode|remove:'page' }}&{% endif %}page={{ reservas.previous_page_number }}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">Anterior</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">Anterior</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% for num in page_range %}
+                                {% if reservas.number == num %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                                {% else %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?{% if request.GET %}{{ request.GET.urlencode|remove:'page' }}&{% endif %}page={{ num }}">
+                                        {{ num }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% if reservas.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?{% if request.GET %}{{ request.GET.urlencode|remove:'page' }}&{% endif %}page={{ reservas.next_page_number }}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">Siguiente</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">Siguiente</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var selectElement = document.getElementById("cantidad-select");
+        var cnt = window.location.pathname.split("/").slice(-2, -1)[0];
+
+        if (!isNaN(parseInt(cnt, 10))) selectElement.value = cnt;
+
+        selectElement.addEventListener("change", function() {
+
+            var filterElements = ['all-filter', 'active-filter', 'inactive-filter'];
+            var activeFilter = "";
+
+            for (var i = 0; i < filterElements.length; i++) {
+                if (document.getElementById(filterElements[i]).classList.contains("active")) {
+                    activeFilter = document.getElementById(filterElements[i]).getAttribute("href").split("=")[1];
+                    break;
+                }
+            }
+
+            var cantidad = this.value;
+            var baseUrl = window.location.origin + window.location.pathname;
+            var newUrl = updatePathSegment(baseUrl, cantidad, activeFilter);
+            window.location.href = newUrl;
+        });
+
+        function updatePathSegment(url, value, filter) {
+            var segments = url.split("/");
+            var lastSegment = segments[segments.length - 2];
+            if (!isNaN(lastSegment)) segments.splice(-2, 1);
+            segments.splice(-1, 1, value);
+
+            if (filter) {
+                var queryString = "filter=" + filter;
+                var hasQueryString = url.indexOf("?") !== -1;
+
+                if (hasQueryString) {
+                    segments.splice(-1, 1, "?" + queryString);
+                } else {
+                    segments.push("?" + queryString);
+                }
+            }
+
+            return segments.join("/");
+        }
+    });
+
+
+
+
+
+</script>
+{% endblock %}

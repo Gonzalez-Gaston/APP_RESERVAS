@@ -1,0 +1,30 @@
+<!-- Modal Import-->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="max-width:420px;">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-5" id="importModalLabel">Importar Datos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" action="{% url 'import_data_coordinator' %}" method="POST" id="form_modificar" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body" style="max-width:420px;">
+                    <div class="form-outline mb-2">
+                        <label for="id_import">Seleccione el archivo a importar *.csv o *.json</label>
+                    </div>
+                    <div class="form-outline mb-2">
+                        <input type="file" name="file" accept="text/csv/*" class="form-control" id="id_import">
+                    </div>
+                    <!-- Submit button -->
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-secondary btn-block flex-fill me-2 mb-4"
+                                data-bs-dismiss="modal">Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-block flex-fill mb-4">Aceptar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->

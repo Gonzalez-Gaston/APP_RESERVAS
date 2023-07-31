@@ -1,0 +1,48 @@
+<!-- Card Employee-->
+<div class="col px-0">
+    <div class="table-responsive table"
+         id="dataTable"
+         role="grid"
+         aria-describedby="dataTable_info">
+        <table class="table my-0">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>dni</th>
+                <th>Activo</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Inicio de TD -->
+            {% for coordinador in coordinadores %}
+            <tr class="align-middle">
+                <td>{{ coordinador.nombre }}</td>
+                <td>{{ coordinador.apellido }}</td>
+                <td>{{ coordinador.dni }}</td>
+                <td style="width: 116px;">
+                    {% if coordinador.activo %}
+                    <a class="btn btn-primary" href="/coordinadores/desactivar/{{ coordinador.id }}">Activo</a>
+                    {% else %}
+                    <a class="btn btn-secondary"
+                       href="/coordinadores/activar/{{ coordinador.id }}">Desactivado</a>
+                    {% endif %}
+                </td>
+                <td style="width: 100px;">
+                    <a class="btn btn-warning"
+                       href="#"
+                       onclick="edit_coordinador(this)"
+                       data-id="{{ coordinador.id }}"
+                       data-bs-toggle="modal"
+                       data-bs-target="#newCoordinatorModal">
+                        Modificar
+                    </a>
+                </td>
+            </tr>
+            {%endfor%}
+            <!-- Fin de TD -->
+            </tbody>
+        </table>
+    </div>
+</div>
